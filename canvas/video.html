@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<body>
+
+<p>要使用的视频：</p>
+
+<p>画布（每 20 毫秒，代码就会绘制视频的当前帧）：</p>
+
+<canvas id="myCanvas" width="270" height="135" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+<button onclick="play()">播放</button>
+<script>
+
+var v=document.createElement("video");
+v.setAttribute("src", "mov_bbb.mp4");
+v.setAttribute("proload", "true");
+v.setAttribute("x-webkit-airplay", "true");
+v.setAttribute("webkit-playsinline", "true");
+function play(){
+	v.play();
+}
+var c=document.getElementById("myCanvas");
+ctx=c.getContext('2d');
+
+v.addEventListener('play', function() {var i=window.setInterval(function() {ctx.drawImage(v,0,0,270,135)},20);},false);
+v.addEventListener('pause',function() {window.clearInterval(i);},false);
+v.addEventListener('ended',function() {clearInterval(i);},false);  
+
+</script>
+
+</body>
+</html>

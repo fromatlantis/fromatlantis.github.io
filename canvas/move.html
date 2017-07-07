@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			color: #fff;
+			font-size: 18px;
+		}
+		#canvas {
+			position: absolute;
+		    top: 0;
+		    left: 0;
+		    z-index: -1;
+		}
+	</style>
+</head>
+<body>
+	<canvas id='canvas'></canvas>
+	<div>星空</div>
+	<script type="text/javascript">
+		var w=window.innerWidth,h=window.innerHeight;
+		var canvas=document.getElementById('canvas'),
+			context=canvas.getContext('2d');
+		var	imageArr=[];
+		var textArr=[];
+		var effectArr=['zoomIn','moveLeft'];
+		for(var i=1;i<3;i++){
+			var image=new Image();
+			image.src='00'+i+'.png';
+			imageArr.push(image);
+		}
+		textArr.push('我爱麻明慧');
+		textArr.push('我们在一起，就是我最幸福的时光');
+		canvas.setAttribute('width',w);
+		canvas.setAttribute('height',h);
+		var timer=0;
+		var duration=2500;
+		var frame=1;
+		var fps=1000/60;
+		var scale=1.2;
+		var sx=0,sy=0;	
+		
+	 	function drawImageByScale(sx){  
+  			//var image=new Image();
+  			//image.src='00'+i+'.png';
+  			var image=imageArr[1];
+  			//console.log(image);
+  			//image.onload=function(){
+	            var imageWidth = w * scale ; 
+	            var imageHeight = h * scale ;
+	            var realWidth=image.width,realHeight=image.height; 
+	            if(h>w){
+	            	imageWidth=(imageHeight*realWidth)/realHeight;
+	            	//console.log(imageWidth);
+	            }else if(h<=w){
+	            	imageHeight=(imageWidth*realHeight)/realWidth;
+	            }
+	         	var x = canvas.width /2 - imageWidth / 2  
+	            var y = canvas.height / 2 - imageHeight / 2  
+	  			console.log(imageWidth);
+	            context.clearRect( 0 , 0 , canvas.width , canvas.height )  ;
+	            context.drawImage( image , x+sx , y , imageWidth , imageHeight )  ;
+	            drawText(textArr[1]);
+	            //sx+=5;
+	        //}
+        }
+        function drawText(text){
+
+        	context.fillStyle="rgba(0,0,0,.7)";  //填充的颜色
+        	context.fillRect(0,h-150,w,80);
+        	context.font="20px 微软雅黑";
+        	context.fillStyle="#FFFFFF";  //填充的颜色
+        	//context.translate(35, 0); 
+        	context.fillText(text,10,h-105);
+
+        }  
+        if (window.DeviceMotionEvent) { 
+            window.addEventListener('deviceorientation',deviceOrientationListener);  
+        } 
+        var speed = 1;//speed
+        //var x = y = z = lastX = lastY = lastZ = 0;
+        var lastAlpha=0,left=0;
+        function deviceOrientationListener(e) {  
+          	var diff=e.alpha - lastAlpha
+		    lastAlpha = e.alpha;
+		    if(e.beta>80)return;//||diff<1
+		   	if(diff>300)
+		    {
+		        diff = (diff-360);
+
+		    }else if(diff<-300)
+		     {
+		            diff = (diff+360);
+		      }
+		  //  if(diff<1)return
+		     diff*=20
+		     left = parseInt(left)+diff;
+		     //left= t.getRange(left);
+		     //alert(parseInt(left));
+		     drawImageByScale(left);
+        }
+	</script>
+</body>
+</html>
