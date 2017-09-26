@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <title>综合练习</title>
+  <link rel="stylesheet" href="css/nav.css"/>
+  <style>
+    body {
+      font-size:14px;
+      font-family:'微软雅黑';
+      background:url(images/bg.jpg) repeat;
+    }
+    .container {
+      width:1024px;
+      margin:0 auto;
+      position:relative;
+    }
+    iframe {
+      width:100%;
+      border:none;
+    }
+    .footer {
+      text-align: center;
+      padding: 15px;
+    }
+    .link-friends {
+      padding-top:30px;
+      padding-bottom:10px;
+      text-align:center;
+      font-size:16px;
+    }
+    .link-friends a{
+      margin:5px;
+    }
+    .logo {
+      position: absolute;
+      left:0;
+      width:60px;
+    }
+    .logo img {
+      width:60px;
+    }
+  </style>
+  <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+  <!--jquery导航插件-->
+  <script type="text/javascript">
+  $(function(){
+    var qcloud={};
+    $('[_t_nav]').hover(function(){
+      var _nav = $(this).attr('_t_nav');
+      clearTimeout( qcloud[ _nav + '_timer' ] );
+      qcloud[ _nav + '_timer' ] = setTimeout(function(){
+      $('[_t_nav]').each(function(){
+      $(this)[ _nav == $(this).attr('_t_nav') ? 'addClass':'removeClass' ]('nav-up-selected');
+      });
+      $('#'+_nav).stop(true,true).slideDown(200);
+      }, 150);
+    },function(){
+      var _nav = $(this).attr('_t_nav');
+      clearTimeout( qcloud[ _nav + '_timer' ] );
+      qcloud[ _nav + '_timer' ] = setTimeout(function(){
+      $('[_t_nav]').removeClass('nav-up-selected');
+      $('#'+_nav).stop(true,true).slideUp(200);
+      }, 150);
+    });
+  });
+  function iframeHeight(){
+    var iframe = document.getElementById("frame");
+    try{
+      var bHeight = iframe.contentWindow.document.body.scrollHeight;
+      var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+      console.log(bHeight);
+      console.log(dHeight);
+      var height = Math.min(bHeight, dHeight);
+      iframe.height = height;
+    }catch (ex){
+      console.log(ex);
+    }
+  }
+  </script>
+</head>
+<body>
+  <!--导航插件-->
+  <div class="head-v3">
+    <div class="navigation-up">
+      <div class="navigation-inner">
+        <div class="navigation-v3">
+          <ul>
+            <li class='logo'>
+              <img src='images/logo.png'/>
+            </li>
+            <li class="nav-up-selected-inpage" _t_nav="home">
+              <h2>
+                <a href="home.html" target="frame">首页</a>
+              </h2>
+            </li>
+            <li class="" _t_nav="product">
+              <h2>
+                <a href="javascript:;" target="frame">美食</a>
+              </h2>
+            </li>
+            <li class="" _t_nav="wechat">
+              <h2>
+                <a href="javascript:;" target="frame">旅行</a>
+              </h2>
+            </li>
+            <li class="" _t_nav="solution">
+              <h2>
+                <a href="javascript:;" target="frame">摄影</a>
+              </h2>
+            </li>
+            <li class="" _t_nav="cooperate">
+              <h2>
+                <a href="javascript:;" target="frame">家居</a>
+              </h2>
+            </li>
+            <li _t_nav="support">
+              <h2>
+                <a href="javascript:;" target="frame">关于我</a>
+              </h2>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="navigation-down">
+      <div id="product" class="nav-down-menu menu-1" style="display: none;" _t_nav="product">
+        <div class="navigation-down-inner">
+          <dl style="margin-left: 200px;">
+            <dt>便当</dt>
+            <dd>
+              <a href="foods.html" target="frame">你的名字</a>
+            </dd>
+            <dd>
+              <a href="foods.html" target="frame">便当</a>
+            </dd>
+            <dd>
+              <a href="foods.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+          <dl>
+            <dt>可乐</dt>
+            <dd>
+              <a href="foods.html" target="frame">你的名字</a>
+            </dd>
+            <dd>
+              <a href="foods.html" target="frame">可乐</a>
+            </dd>
+            <dd>
+              <a href="foods.html" target="frame">咖啡</a>
+            </dd>
+            <dd>
+              <a href="foods.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+          <dl>
+            <dt>纸杯蛋糕</dt>
+            <dd>
+              <a href="foods.html" target="frame">你的名字</a>
+            </dd>
+            <dd>
+              <a href="foods.html" target="frame">纸杯蛋糕</a>
+            </dd>
+            <dd>
+              <a href="foods.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+          <dl>
+            <dt>牛奶</dt>
+            <dd>
+              <a href="foods.html" target="frame">你的名字</a>
+            </dd>
+            <dd>
+              <a href="foods.html" target="frame">牛奶</a>
+            </dd>
+             <dd>
+              <a href="foods.html" target="frame">咖啡</a>
+            </dd>
+             <dd>
+              <a href="foods.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div id="wechat" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="wechat">
+        <div class="navigation-down-inner">
+          <dl style="margin-left: 300px;">
+            <dd>
+              <a href="travel.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+          <dl>
+            <dd>
+              <a href="travel.html" target="frame">冬天的童话</a>
+            </dd>
+          </dl>
+          <dl>
+            <dd>
+              <a href="travel.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div id="solution" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="solution">
+        <div class="navigation-down-inner">
+          <dl style="margin-left: 380px;">
+            <dd>
+              <a href="photo.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+          <dl>
+            <dd>
+              <a href="photo.html" target="frame">lomo摄影</a>
+            </dd>
+          </dl>
+          <dl>
+            <dd>
+              <a href="photo.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+        </div>
+      </div>
+       <div id="cooperate" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="cooperate">
+        <div class="navigation-down-inner">
+          <dl style="margin-left: 480px;">
+            <dd>
+              <a href="decor.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+          <dl>
+            <dd>
+              <a href="decor.html" target="frame">简约风格家居</a>
+            </dd>
+          </dl>
+          <dl>
+            <dd>
+              <a href="decor.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div id="support" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="support">
+        <div class="navigation-down-inner">
+          <dl style="margin-left: 610px;">
+            <dd>
+              <a href="me.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+          <dl>
+            <dd>
+              <a href="me.html" target="frame">联系我</a>
+            </dd>
+          </dl>
+          <dl>
+            <dd>
+              <a href="me.html" target="frame">你的名字</a>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--导航插件End-->
+  <div class='container'>
+    <iframe src="home.html" id='frame' name='frame' onload="iframeHeight()" scrolling="no" frameborder="0"></iframe>
+  </div>
+  <div class='link-friends'>
+    <span>友情链接：</span>
+    <a href='http://www.baidu.com' target="_blank">百度</a>
+    <a href='http://www.taobao.com' target="_blank">淘宝</a>
+    <a href='http://www.jingdong.com' target="_blank">京东</a>
+    <a href='http://www.huaban.com' target="_blank">花瓣</a>
+    <a href='http://www.jianshu.com' target="_blank">简书</a>
+  </div>
+  <div class='footer'>
+    Copyright ©2016 软件1501 你的名字
+  </div>
+</body>
+</html>

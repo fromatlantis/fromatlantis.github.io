@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+  	<title>综合练习</title>
+  	<link rel="stylesheet" href="css/nav.css"/>
+  	<style type="text/css">
+  		body {
+  			padding-top:10px;
+  			font-family:'微软雅黑';
+  		}
+  		p{
+  			line-height:24px;
+  			font-size:14px;
+  			text-indent: 2em;
+  		}
+  		h1 {
+  			font-size:18px;
+  		}
+  		.page {
+  			width:1000px;
+  			margin:0 auto;
+  		}
+  		.user-box {
+  			width:300px;
+  			margin:0 auto;
+  			font-size:20px;
+  			margin-top:100px;
+  		}
+  		.user-box img {
+  			width:100px;
+  		}
+  		.content {
+  			width:500px;
+  			margin:0 auto;
+  		}
+  		.content-2 {
+  			margin-top:20px;
+  		}
+  		.form {
+  			margin-top:10px;
+  		}
+  		.form-table {
+  			width:100%;
+  		}
+  		.form-table td {
+  			padding-top: 5px;
+  			padding-bottom: 5px;
+  		}
+  		input {
+  			width:100%;
+  			height:30px;
+  			line-height:30px;
+  		}
+  		.says {
+  			width:100%;
+  			height:80px;
+  		}
+  		.email {
+  			text-align:right;
+  		}
+  		.submit {
+  			margin-top:20px;
+  		}
+  	</style>
+</head>
+<body>
+	<div class='page'>
+		<table class='user-box'>
+			<tr>
+				<td><img src='images/user.png'/></td>
+				<td><h1>你的名字 班级</h1></td>
+			</tr>
+		</table>
+		<div class='content'>
+			<h1>我的留言：</h1>
+			<p>如果你和我一样，有着共同的爱好，和想要去的地方，不妨和我联系，我们可以一起去完成我们的而青春，我在某个美食街等你，在世界的某个角落等你。 </p>
+		</div>
+		<div class='content content-2'>
+			<h1>给我留言：</h1>
+			<form action="" method="post" class='form'>
+				<table class='form-table'>
+					<tr>
+						<td>姓名：</td>
+						<td><input type="text" name="username" placeholder="用户名"></td>
+						<td class='email'>邮箱：</td>
+						<td><input type="text" name="email" placeholder="邮箱"></td>
+					</tr>
+					<tr>
+						<td>图片：</td>
+						<td colspan="3"><input type="file" name="file"></td>
+					</tr>
+					<tr>
+						<td>留言：</td>
+						<td colspan="3"><textarea class='says' placeholder="想对我说点什么吗"></textarea></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td colspan="3"><input type="submit" class="submit" name="submit" value="提交"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
