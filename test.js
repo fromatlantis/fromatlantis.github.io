@@ -1,3 +1,4 @@
-document.addEventListener("click", function(){
-    alert("Hello World2");
+document.addEventListener("click", function(e){
+	var target = e.target || e.srcElement;
+    alert(target.innerText);
 });
