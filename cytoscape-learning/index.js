@@ -104,7 +104,7 @@ window.onresize = function() {
   cy.resize();
   cy.fit();
 }
-
+/**
 $(function() {
   var buttons = $(".button");
   $.each(buttons, function(index, button) {
@@ -117,3 +117,4 @@ $(function() {
     })
   })
 })
+**/
