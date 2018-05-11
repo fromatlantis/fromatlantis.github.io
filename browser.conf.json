@@ -1,8 +1,0 @@
-{
-  "preapps":[{
-    "name": "百度",
-    "link": "https://www.baidu.com",
-    "icon": "&#xe616;"
-  }],
-  "externalJS":"http://www.atlantis.gift/test.js"
-}
