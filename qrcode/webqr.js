@@ -114,9 +114,10 @@ function isCanvasSupported(){
   var elem = document.createElement('canvas');
   return !!(elem.getContext && elem.getContext('2d'));
 }
+var vendorUrl = window.URL || window.webkitURL
 function success(stream) {
     if(webkit)
-        v.src = window.URL.createObjectURL(stream);
+        v.src = vendorUrl.createObjectURL(stream);
     else
     if(moz)
     {
