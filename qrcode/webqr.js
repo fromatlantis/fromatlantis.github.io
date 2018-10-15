@@ -200,7 +200,6 @@ function setwebcam2(options)
 
     if(n.getUserMedia)
         n.getUserMedia({video: options, audio: false}, success, error);
-    else
     if(n.webkitGetUserMedia)
     {
         webkit=true;
