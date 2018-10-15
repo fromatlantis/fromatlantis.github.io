@@ -17,7 +17,7 @@ var imghtml='<div id="qrfile"><canvas id="out-canvas" width="320" height="240"><
 	'</div>'+
 '</div>';
 
-var vidhtml = '<video id="v" autoplay playsinline></video>';
+var vidhtml = '<video id="v" autoplay playsinline controls="true"></video>';
 
 function dragenter(e) {
   e.stopPropagation();
