@@ -6,7 +6,7 @@ var gCanvas = null;
 var c=0;
 var stype=0;
 var gUM=false;
-var webkit=true;
+var webkit=false;
 var moz=false;
 var v=null;
 
@@ -118,14 +118,13 @@ var vendorUrl = window.URL || window.webkitURL
 function success(stream) {
     if(webkit)
         v.src = vendorUrl.createObjectURL(stream);
-    else
     if(moz)
     {
         v.mozSrcObject = stream;
         v.play();
     }
     else
-        v.src = stream;
+        v.srcObject = stream;
     gUM=true;
     setTimeout(captureToCanvas, 500);
 }
