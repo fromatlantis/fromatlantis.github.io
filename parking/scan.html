@@ -13,7 +13,7 @@
             overflow: hidden;
         }
 
-        #video, #qr-canvas {
+        #video {
             width: 100%;
             height: 100vh;
         }
@@ -37,10 +37,13 @@
             gCanvas = document.getElementById("qr-canvas"),
             gCtx,
             vendorUrl = window.URL || window.webkitURL;
+        var w = window.innerWidth, h = window.innerHeight;
         start();
         function start() {
+            gCanvas.width = w;
+            gCanvas.height = h;
             gCtx = gCanvas.getContext("2d");
-            gCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            gCtx.clearRect(0, 0, w, h);
             qrcode.callback = function(a){
                 alert(a)
             }
