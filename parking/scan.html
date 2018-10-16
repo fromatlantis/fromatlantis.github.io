@@ -104,7 +104,7 @@
             if(navigator.webkitGetUserMedia){
                 video.src = vendorUrl.createObjectURL(strem);
             }else{
-                v.srcObject = strem;
+                video.srcObject = strem;
             }
             video.play();
             gUM = true;
