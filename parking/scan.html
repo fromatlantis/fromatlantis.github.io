@@ -13,15 +13,20 @@
             overflow: hidden;
         }
 
-        #video {
-            
+        #video, #qr-canvas {
+            width: 100%;
+            height: 100vh;
+        }
+        #qr-canvas {
+            display: none;
         }
     </style>
     <script src="./llqrcode.js"></script>
 </head>
 
 <body>
-    <video id="video" width="320" height="240" autoplay playsinline></video>
+    <canvas id="qr-canvas" width="800" height="600"></canvas>
+    <video id="video" autoplay playsinline style="object-fit: cover;"></video>
     <script>
         var stype = 1;
         var gUM = false;
@@ -29,9 +34,13 @@
             canvas = document.getElementById('canvas'),
             snap = document.getElementById('tack'),
             img = document.getElementById('img'),
+            gCanvas = document.getElementById("qr-canvas"),
+            gCtx,
             vendorUrl = window.URL || window.webkitURL;
         start();
         function start() {
+            gCtx = gCanvas.getContext("2d");
+            gCtx.clearRect(0, 0, 800, 600);
             qrcode.callback = function(a){
                 alert(a)
             }
@@ -79,7 +88,7 @@
                 return;
             if (gUM) {
                 try {
-                    //canvas.drawImage(v, 0, 0);
+                    gCtx.drawImage(video, 0, 0);
                     try {
                         qrcode.decode();
                     } catch (e) {
@@ -105,7 +114,7 @@
             }else{
                 video.srcObject = strem;
             }
-            //video.play();
+            video.play();
             gUM = true;
             setTimeout(captureToCanvas, 500);
         }
