@@ -25,7 +25,7 @@
 </head>
 
 <body>
-    <canvas id="qr-canvas" width="800" height="600"></canvas>
+    <canvas id="qr-canvas" style="object-fit: cover;"></canvas>
     <video id="video" autoplay playsinline style="object-fit: cover;"></video>
     <script>
         var stype = 1;
@@ -40,7 +40,7 @@
         start();
         function start() {
             gCtx = gCanvas.getContext("2d");
-            gCtx.clearRect(0, 0, 800, 600);
+            gCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
             qrcode.callback = function(a){
                 alert(a)
             }
