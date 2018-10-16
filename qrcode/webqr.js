@@ -75,7 +75,7 @@ function captureToCanvas() {
         return;
     if (gUM) {
         try {
-            //gCtx.drawImage(v, 0, 0);
+            gCtx.drawImage(v, 0, 0);
             try {
                 qrcode.decode();
             }
