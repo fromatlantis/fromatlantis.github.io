@@ -101,7 +101,7 @@
         })
 
         function success(strem) {
-            if(navigator.getUserMedia){
+            if(navigator.webkitGetUserMedia){
                 video.src = vendorUrl.createObjectURL(strem);
             }else{
                 v.srcObject = strem;
