@@ -20,11 +20,37 @@
         #qr-canvas {
             display: none;
         }
+        .scan-box, .pane {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            overflow: hidden;  /* 隐藏显示区域外的内容*/
+        }
+        .scan-box {
+            position: relative;
+            margin-top: calc(50vh - 100px);
+            z-index: 99;
+            background: url(scan1.png) center center no-repeat;
+        }
+        .pane {
+            position: absolute;
+            z-index: -1;
+            background: url(scan2.png) center center no-repeat;
+            animation: move 1.5s ease-in-out infinite;
+            -webkit-animation: move 1.5s ease-in-out infinite;
+        }
+        @keyframes move {
+            from{top:-200px}  /*网格移动到显示区域的外面*/
+            to{top:0}
+        }
     </style>
     <script src="./llqrcode.js"></script>
 </head>
 
 <body>
+    <div class="scan-box">
+        <div class="pane"></div>
+    </div>
     <canvas id="qr-canvas" style="object-fit: cover;"></canvas>
     <video id="video" autoplay playsinline style="object-fit: cover;"></video>
     <script>
