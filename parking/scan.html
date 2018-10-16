@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    <video id="video" autoplay playsinline></video>
+    <video id="video" width="320" height="240" autoplay playsinline></video>
     <script>
         var stype = 1;
         var gUM = false;
@@ -106,7 +106,7 @@
             }else{
                 video.srcObject = strem;
             }
-            video.play();
+            //video.play();
             gUM = true;
             setTimeout(captureToCanvas, 500);
         }
