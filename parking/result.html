@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>result</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/iview/dist/styles/iview.css">
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .result {
+            height: 80px;
+            text-align: center;
+        }
+        .place {
+            padding: 15px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .ivu-modal-body {
+            padding: 0;
+            height: 400px;
+            overflow: auto;
+        }
+        .place {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+        .result p {
+            padding: 5px 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='app'>
+        <Modal v-model="modal" fullscreen title="附近地点" footer-hide>
+            <div class="place" v-for="(item, index) in places">
+                <div>
+                    <p v-if='index==0'>车辆位置：{{item.name}}</p>
+                    <p v-else>地点名称：{{item.name}}</p>
+                    <p>位置：{{item.position}}</p>
+                    <p style="font-size: 12px;color: #999">距离：{{item.distance/1000}}m</p>
+                </div>
+                <div style="text-align: center;" @click="go(item)">
+                    <Icon type="md-ionic" size="30" color="#2b85e4"></Icon>
+                    <p>去这里</p>
+                </div>
+            </div>
+        </Modal>
+        <div class='result'>
+            <Alert type="error" v-if='errorMsg' style='margin-top: 50px;'>{{errorMsg}}</Alert>
+            <Alert type="success" v-if='safe' style='margin-top: 50px;'>{{safe}}</Alert>
+            <p v-if='type==1' style='margin-top: 50px;'>您爱车的当前位置：{{nowQRcodeName}} {{nowQRcodePosition}}</p>
+            <div v-if='type==2 || type==3'>
+                <p v-if='type==3' style="color:green">您的爱车在：{{location}}</p>
+                <p>路线：{{direction}}</p>
+            </div>
+        </div>
+        <canvas id='map'></canvas>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iview/2.14.0/iview.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        function getUrlKey(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [,
+                ""
+            ])[1].replace(/\+/g, '%20')) || null
+        }
+        var url = 'http://openapi.daodingtech.com:51000';
+        var data = {
+            qrCode: getUrlKey('qrcode'),
+            type: getUrlKey('type'),
+            uid: getUrlKey('uid'),
+            token: '',
+            //sign: 'd73fd40bc7f4414afb26cba9c5afb100'
+        }
+        var app = new Vue({
+            el: '#app',
+            data: {
+                visible: false,
+                type: getUrlKey('type'),
+                modal: false,
+                places: [],
+                location: '',
+                direction: '',
+                nowQRcodeName: '',
+                nowQRcodePosition: '',
+                errorMsg:'',
+                safe:''
+            },
+            created: function () {
+                var me = this;
+                getData(function (data) {
+                    if (me.type == '2') {
+                        me.modal = true;
+                        me.places = data.qrcodeList;
+                    }else if(me.type=='3'){
+                        drawPath(data);
+                        me.location = data.road[0].qrCodeName;
+                        me.direction = data.direction;
+                    }else if(me.type=='1'){
+                        me.nowQRcodeName = data.nowQRcodeName;
+                        me.nowQRcodePosition = data.nowQRcodePosition;
+                    }else if(me.type=='5') {
+                        me.safe = '已为您开启安全护送';
+                    }
+                })
+            },
+            methods: {
+                go: function (item) {
+                    var me = this;
+                    getData(function(data){
+                        me.modal = false;
+                        drawPath(data);
+                        me.direction = data.direction;
+                    },item.id);
+                }
+            }
+        })
+
+        function getData(callback, id) {
+            // 指路导航 type=4
+            if(id){
+                data.qrCode = id;
+                data.type = 4;
+            }
+            $.ajax({
+                type: "POST",
+                url: '/xsparking/parking/getToken',
+                data: {
+                    code: 'qdxs001',
+                    secret: 'ed62d4335a294932849415a4cc171e8c',
+                    parkingId: '0702050884546326528'
+                },
+                dataType: "json",
+                //contentType: 'application/x-www-form-urlencoded',
+                success: function (res) {
+                    console.log(res)
+                    data.token = res.data.token;
+                    $.ajax({
+                        type: "POST",
+                        url: '/xsparking/parking/operating',
+                        data: data,
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.errorCode == 200) {
+                                if (callback) callback(res.data);
+                            } else {
+                                app.errorMsg = res.errorMsg;
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        // 位置连线
+        function drawPath(data) {
+            var mapWidth = 912,
+                mapHeight = 1599;
+            var c = document.getElementById("map");
+            c.width = mapWidth;
+            c.height = mapHeight;
+            var ctx = c.getContext("2d");
+            var img = new Image();
+            img.src = data.image;
+            var scale = (window.innerHeight - 80) / mapHeight;
+            ctx.scale(scale, scale);
+            ctx.drawImage(img, 0, 0);
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            data.road.forEach(function (item, index) {
+                var x = item.widthScale * mapWidth,
+                    y = item.lengthScale * mapHeight;
+                if (index == 0) {
+                    ctx.moveTo(x, y);
+                    ctx.fillStyle = 'red';
+                    ctx.font = "16px Georgia";
+                    ctx.fillText("我的位置", x + 5, y + 5);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            })
+            ctx.stroke();
+            drawArrow(ctx, data.road);
+            //cxt.closePath();
+        }
+        // 绘制箭头
+        function drawArrow(ctx, roads) {
+            var mapWidth = 912,
+                mapHeight = 1599;
+            var last = roads[roads.length - 1],
+                pre = roads[roads.length - 2];
+            var lx = last.widthScale * mapWidth,
+                ly = last.lengthScale * mapHeight;
+            var px = pre.widthScale * mapWidth,
+                py = pre.lengthScale * mapHeight;
+            var endRadians = Math.atan((py - ly) / (px - lx));
+            endRadians += ((lx > px) ? 90 : -90) * Math.PI / 180;
+            ctx.save();
+            ctx.beginPath();
+            ctx.translate(lx, ly);
+            ctx.rotate(endRadians);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(5, 10);
+            ctx.lineTo(-5, 10);
+            ctx.closePath();
+            ctx.restore();
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.fillStyle = 'red';
+            ctx.font = "16px Georgia";
+            ctx.fillText("目标位置", lx + 5, ly + 5);
+        }
+    </script>
+</body>
+
+</html>
