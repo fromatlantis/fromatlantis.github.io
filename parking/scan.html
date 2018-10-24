@@ -78,6 +78,18 @@
     <canvas id="qr-canvas" style="object-fit: cover;"></canvas>
     <video id="video" autoplay playsinline style="object-fit: cover;"></video>
     <script>
+        ehopenapi.qrParse({
+            success: function(res) {
+                var qrData = res.qrData; //获取返回的二维码数据字符串
+                var type = res.type; //1:条形码  2:二维码
+                //扫描成功回调函数
+                alert(qrData);
+            },
+            fail: function(res) {
+                //扫描失败回调函数
+                alert('error')
+            }
+        });
         var stype = 1;
         var gUM = false;
         var video = document.getElementById('video'),
