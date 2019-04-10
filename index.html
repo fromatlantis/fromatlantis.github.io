@@ -22,8 +22,10 @@
 </div>
 <footer></footer>
 <script>
-	var token = window.tu ? window.tu.token : 'no-tu'
-	alert(token)
+	var tu = window.tu ? window.tu : {}
+	tu.cb('hello',function(cb){
+		alert(cb)
+	})
 	require.config({
 		baseUrl: '',
 		paths: {
