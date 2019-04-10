@@ -24,13 +24,13 @@
 <script>
 	var tu = window.tu ? window.tu : {}
 	console.log(tu.token)
-	tu.cb('hello',function(cb){
+	tu.cb && tu.cb('hello',function(cb){
 		alert(cb)
 	})
 	require.config({
 		baseUrl: '',
 		paths: {
-			"zepto": "plugins/zepto.min",
+		"zepto": "plugins/zepto.min",
         	"underscore": "plugins/underscore"
 	    }
 	});
