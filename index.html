@@ -23,7 +23,7 @@
 <footer></footer>
 <script>
 	var tukit = window.tukit ? window.tukit : {}
-	alert(JSON.stringify(tukit._INFO))
+	alert(JSON.stringify(tukit.getUserInfo))
 	alert(tukit._INFO.token)
 	tukit.getUserInfo && tukit.getUserInfo({
 		success:function(){alert(1)}
