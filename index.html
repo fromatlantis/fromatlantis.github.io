@@ -25,9 +25,7 @@
 	var tukit = window.tukit ? window.tukit : {}
 	alert(JSON.stringify(window.tu))
 	alert(tukit._INFO.token)
-	tukit.getUserInfo && tukit.getUserInfo({
-		success:function(){alert(1)}
-	})
+	tukit.getUserInfo && tukit.getUserInfo(function(a){alert(1)})
 	require.config({
 		baseUrl: '',
 		paths: {
