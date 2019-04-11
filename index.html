@@ -23,9 +23,8 @@
 <footer></footer>
 <script>
 	var tukit = window.tukit ? window.tukit : {}
-	window.tu.cb({success:function(){}})
 	alert(tukit._INFO.token)
-	tukit.getUserInfo && tukit.getUserInfo(function(a){alert(1)})
+	tukit.getUserInfo && tukit.getUserInfo({success:function(){}})
 	require.config({
 		baseUrl: '',
 		paths: {
